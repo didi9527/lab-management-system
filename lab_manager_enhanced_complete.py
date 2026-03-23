@@ -1,4 +1,21 @@
 # lab_manager_enhanced_complete.py
+import os
+import sys
+import tempfile
+
+# 云端部署适配
+if 'STREAMLIT_CLOUD' in os.environ:
+    # 使用临时目录存储文件
+    UPLOAD_DIR = tempfile.mkdtemp()
+    DB_PATH = os.path.join(tempfile.gettempdir(), 'lab_data.db')
+else:
+    UPLOAD_DIR = 'uploaded_files'
+    DB_PATH = 'lab_data_enhanced.db'
+
+# 创建上传目录
+os.makedirs(UPLOAD_DIR, exist_ok=True)
+for sec in ['A', 'AA', 'S']:
+    os.makedirs(f"{UPLOAD_DIR}（密级{sec}）", exist_ok=True)
 import streamlit as st
 import pandas as pd
 import sqlite3
